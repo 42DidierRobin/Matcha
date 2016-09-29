@@ -223,6 +223,8 @@ function verify_email(data, cb) {
     get_user_by_pseudo(data.pseudo, function (err, res) {
         if (err)
             cb(true, data);
+        else if (!res)
+            cb(true, 'no user with this pseudo');
         else {
             if (res.mail_verif == 'OK')
                 cb(42, "already verified key");

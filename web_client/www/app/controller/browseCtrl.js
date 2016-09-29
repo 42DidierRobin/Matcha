@@ -8,11 +8,14 @@ angular.module('matchaApp').controller('browseCtrl', function ($rootScope, $scop
     $scope.noResult = 'hide';
 
     sender.post('/Search', {
-            age: {from: ((user.age - 8) < 0) ? 0 : user.age - 8,
-                to : ((user.age + 8) > 99) ? 99 : user.age + 8},
-            score: {from: ((user.score - 20) < 0) ? 0 : user.score - 20,
+            age: {from: ((user.age - 15) < 18) ? 18 : user.age - 15,
+                to : ((user.age + 15) > 99) ? 99 : user.age + 15},
+            score: {from: ((user.score - 30) < 0) ? 0 : user.score - 30,
                     to : ((user.score + 20) > 100) ? 100 : user.score + 20},
-                    tags: [],
+            dist: {from: 0, to : 200},
+            tags: [],
+        lat: $rootScope.user.loca_lat,
+        lng: $rootScope.user.loca_lng,
             sex: $rootScope.user.orientation},
         function (success) {
                 console.log(success);

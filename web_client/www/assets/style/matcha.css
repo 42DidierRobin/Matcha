@@ -482,6 +482,7 @@ button.makeFirst {
     background: url('./img/icon/make_first_photo.png');
     background-position: center;
     border: none;
+    box-shadow: none;
 }
 
 button.delete {
@@ -493,6 +494,7 @@ button.delete {
     background: url('./img/icon/delete_photo.png');
     background-position: center;
     border: none;
+    box-shadow: none;
 }
 
 .fullProfile {

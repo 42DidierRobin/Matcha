@@ -3,7 +3,7 @@
  */
 'use strict';
 var url = '37.139.18.104';
-var api = 'http://'+url+':4201';
+var api = 'http://' + url + ':4201';
 var app = angular.module('matchaApp', ['ngRoute', 'ngCookies', 'requester', 'rzModule']);
 var mail_regex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 var name_regex = /^[a-z0-9]{3,12}$/i;
@@ -127,50 +127,49 @@ app.directive('imagedrop', function ($parse, $document) {
     };
 });
 
-app.run(function($rootScope, $location){
-    $rootScope.$on("$routeChangeStart", function(event, next) {
-        if (!$rootScope.user &&  next.templateUrl != './app/view/inscription.html' && next.templateUrl != './app/view/home.html' && next.templateUrl != './app/view/connection.html') {
+app.run(function ($rootScope, $location) {
+    $rootScope.$on("$routeChangeStart", function (event, next) {
+        if (!$rootScope.user && next.templateUrl != './app/view/inscription.html' && next.templateUrl != './app/view/home.html' && next.templateUrl != './app/view/connection.html') {
             $location.path('/home');
         }
     });
 });
 
-function googleRDY(){
+function googleRDY() {
     gglrdy = true;
 }
 
-//TODO: definir le mdp minimum ici
-/*
- app.directive('pass', function() {
- return {
- require: 'ngModel',
- link: function(scope, elm, attrs, ctrl) {
- ctrl.$validators.pass = function(modelValue, viewValue) {
- if (ctrl.$isEmpty(modelValue)) {
- return false;
- }
- if (test_pass(viewValue)) {
- // it is valid
- return true;
- }
- // it is invalid
- return false;
- };
- }
- };
- });*/
+app.directive('pass', function () {
+    return {
+        require: 'ngModel',
+        link: function (scope, elm, attrs, ctrl) {
+            ctrl.$validators.pass = function (modelValue, viewValue) {
+                if (ctrl.$isEmpty(modelValue)) {
+                    return false;
+                }
+                if (viewValue.length <= 3) {
+                    // it is invalid
+                    return false;
+                }
+                // it is valid
+                return true;
+            };
+        }
+    };
+});
 
 app.controller('mainCtrl', function ($scope, $rootScope, $cookies, $route, sender, $sce) {
 
     $rootScope.user = $cookies.getObject("user");
-    $rootScope.host = 'http://'+url+'/';
+    $rootScope.host = 'http://' + url + '/';
     var socket = create_socket($rootScope, $sce);
     $rootScope.socket = socket;
 
-    if ($rootScope.user){
-        socket.emit('login',{
+    if ($rootScope.user) {
+        socket.emit('login', {
             id: $rootScope.user.id,
-            pseudo: $rootScope.user.pseudo});
+            pseudo: $rootScope.user.pseudo
+        });
     }
 
     $rootScope.deco = function (path) {
@@ -179,7 +178,7 @@ app.controller('mainCtrl', function ($scope, $rootScope, $cookies, $route, sende
         $rootScope.mainPic = null;
         $rootScope.listMatch = null;
         socket.disconnect();
-        window.location = '/home' + (path? ('/' + path): '');
+        window.location = '/home' + (path ? ('/' + path) : '');
     };
 
 });

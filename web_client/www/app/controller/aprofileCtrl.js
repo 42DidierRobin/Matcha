@@ -11,38 +11,6 @@ angular.module('matchaApp').controller('aprofileCtrl', function ($rootScope, $ro
         $location.path('/profile');
     }
     else {
-        $rootScope.socket.emit('newRel', {
-            from_pseudo: $rootScope.user.pseudo,
-            users_from: $rootScope.user.id,
-            users_to: $routeParams.id,
-            type: 2
-        });
-
-        sender.get('/Relation', {users_id_from: $rootScope.user.id, users_id_to: $routeParams.id}, function (result) {
-            if (result.error == 42) {
-                $scope.matched = false;
-                $scope.iLike = false;
-                $scope.imLiked = false;
-                $scope.buttonText = "like it !"
-            }
-            else if ((result.content.one && result.content.one.type == 'B')
-                || (result.content.two && result.content.two.type == 'B'))
-                $location.path('/home');
-            else if (result.content.one && result.content.one.type == 'L') {
-                $scope.iLike = true;
-                $scope.buttonText = 'Dislike it !';
-                if (result.content.two && result.content.two.type == 'L') {
-                    $scope.imLiked = true;
-                    $scope.matched = true;
-                }
-            }
-            else if (result.content.two && result.content.two.type == 'L') {
-                $scope.imLiked = true;
-                $scope.buttonText = "like it !"
-            }
-
-        });
-
         sender.get('/User', {id: $routeParams.id, lat: $rootScope.user.loca_lat, lng: $rootScope.user.loca_lng}, function (success) {
             if (success) {
                 $scope.user = success.content;
@@ -81,8 +49,37 @@ angular.module('matchaApp').controller('aprofileCtrl', function ($rootScope, $ro
                         $scope.listOfTags = success.content;
                     }
                 })
+                $rootScope.socket.emit('newRel', {
+                    from_pseudo: $rootScope.user.pseudo,
+                    users_from: $rootScope.user.id,
+                    users_to: $routeParams.id,
+                    type: 2
+                });
+
+                sender.get('/Relation', {users_id_from: $rootScope.user.id, users_id_to: $routeParams.id}, function (result) {
+                    if (result.error == 42) {
+                        $scope.matched = false;
+                        $scope.iLike = false;
+                        $scope.imLiked = false;
+                        $scope.buttonText = "like it !"
+                    }
+                    else if ((result.content.one && result.content.one.type == 'B')
+                        || (result.content.two && result.content.two.type == 'B'))
+                        $location.path('/home');
+                    else if (result.content.one && result.content.one.type == 'L') {
+                        $scope.iLike = true;
+                        $scope.buttonText = 'Dislike it !';
+                        if (result.content.two && result.content.two.type == 'L') {
+                            $scope.imLiked = true;
+                            $scope.matched = true;
+                        }
+                    }
+                    else if (result.content.two && result.content.two.type == 'L') {
+                        $scope.imLiked = true;
+                        $scope.buttonText = "like it !"
+                    }
+                });
             }
-            ;
         })
     }
 

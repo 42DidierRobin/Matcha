@@ -28,12 +28,12 @@ var daddy_map = {
     'type': {fct: isIn, data: ['L', 'B']},
     'notifType': {fct: isIn, data: ['1', '2', '3', '4']},
     'mail': {fct: check_mail},
-    'name': {fct: checkString, data: 12},
-    'pseudo': {fct: checkString, data: 12},
-    'first_name': {fct: checkString, data: 12},
-    'last_name': {fct: checkString, data: 12},
-    'password': {fct: noCheck},
-    'tag': {fct: checkString, data: 42},
+    'name': {fct: checkString, data: {from: 3, to: 12}},
+    'pseudo': {fct: checkString, data: {from: 3, to: 12}},
+    'first_name': {fct: checkString, data: {from: 3, to: 12}},
+    'last_name': {fct: checkString, data: {from: 3, to: 12}},
+    'password': {fct: minSize, data: 3},
+    'tag': {fct: checkString, data: {from: 1, to: 100}},
     'content': {fct: noCheck},
     'bio': {fct: noCheck},
     'key': {fct: noCheck},
@@ -41,6 +41,10 @@ var daddy_map = {
     'lat': {fct: checkDouble, data: {from: 0, to: 1}},
     'lng': {fct: checkDouble, data: {from: 0, to: 1}}
 };
+
+function minSize(it, size){
+    return (it.length > size);
+}
 
 function checkTab(tab, size){
     return (tab.length <= size)
@@ -74,10 +78,10 @@ function isIn(it, tab) {
     return false
 }
 
-function checkString(it, size) {
+function checkString(it, data) {
     var reg = /^[a-z0-9]+$/i;
     if (reg.test(it)) {
-        if (size && reg.length >= size)
+        if (it.length < data.from || it.length > data.to)
             return false;
         return true;
     }
@@ -95,6 +99,8 @@ function daddy_check(listOfRequired, listOfPossible, sentData, cb) {
     }
     if (keepOn) {
         for (var j in sentData) {
+            if ( j == 'connectedId' || j == 'connectedKey' || j == 'connectedPseudo')
+                continue;
             if (listOfPossible.indexOf(j) == -1) {
                 cb(true, 'CHECK ERROR: args ' + j + ' not possible here /')
                 keepOn = false;

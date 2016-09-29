@@ -20,7 +20,6 @@ function get_ip(req) {
 }
 
 function get_loc(ip, cb){
-    console.log(ip);
     request('http://ip-api.com/json/'+ip+'?fields=lat,lon', function (error, response, body) {
         if (error && response.statusCode != 200)
             cb(true, response);
