@@ -6,4 +6,5 @@ RUN     npm install cors
 RUN     npm install -g nodemon
 RUN     npm install socket.io
 RUN     npm install geo-lib --save
+RUN     npm install request
 EXPOSE 4201

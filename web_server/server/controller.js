@@ -9,9 +9,27 @@ var Message = require('../model/message');
 var Picture = require('../model/picture');
 var check = require('../tools/check');
 var geolib = require('geo-lib');
+var request = require('request');
 
 //TODO: verifier toutes les entrees dargument
 
+function get_ip(req) {
+    return ( req.headers["X-Forwarded-For"]
+    || req.headers["x-forwarded-for"]
+    || req.client.remoteAddress);
+}
+
+function get_loc(ip, cb){
+    console.log(ip);
+    request('http://ip-api.com/json/'+ip+'?fields=lat,lon', function (error, response, body) {
+        if (error && response.statusCode != 200)
+            cb(true, response);
+        else {
+            body = JSON.parse(body);
+            cb(false, {lat: body.lat, lng: body.lon});
+        }
+    });
+}
 
 function new_user(req, cb) {
 
@@ -21,19 +39,26 @@ function new_user(req, cb) {
             if (err)
                 cb(true, data);
             else {
-                //TODO: chercher loca_lng
-                user.define_user(req.body, function (err, data) {
+                get_loc(get_ip(req), function(err, d){
                     if (err)
-                        cb(true, data);
-                    else {
-                        require('../server/server').send_mail(user.generate_confirm_mail(), function (err) {
+                        cb(true, 'error when finding localisation of ip /' + d)
+                    else{
+                        req.body.loca_lat = d.lat;
+                        req.body.loca_lng = d.lng;
+                        user.define_user(req.body, function (err, data) {
                             if (err)
-                                cb(true, 'error sending email confirm / ' + err);
-                            else
-                                cb(false, 'email has been sent / ' + data);
-                        })
+                                cb(true, data);
+                            else {
+                                require('../server/server').send_mail(user.generate_confirm_mail(), function (err) {
+                                    if (err)
+                                        cb(true, 'error sending email confirm / ' + err);
+                                    else
+                                        cb(false, 'email has been sent / ' + data);
+                                })
+                            }
+                        });
                     }
-                });
+                })
             }
         })
 }
@@ -161,10 +186,18 @@ function identify_user(req, cb) {
     var user_dao = require('../model/user_dao');
     check.daddy_check(['pseudo', 'password'], ['pseudo', 'password'], req.body, function (err, data) {
         if (err)
-            cb(true, data)
-        else
-            user_dao.identify(req.body, cb);
-    })
+            cb(true, data);
+        else {
+            get_loc(get_ip(req), function(err, d){
+                if (err)
+                    cb (true, 'error looking for ip /' + d);
+                else{
+                    req.body.lat = d.lat;
+                    req.body.lng = d.lng;
+                    user_dao.identify(req.body, cb);
+                }
+            })
+        }})
 }
 
 function verify_email(req, cb) {

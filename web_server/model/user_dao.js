@@ -80,7 +80,7 @@ function change_mail(data, cb) {
         to: data.mail,
         subject: 'Matcha mail change',
         text: 'Welcome to Matcha ! To confirm your new mail, please click on the link following : ' +
-        'http://'+url+'/connection/' + data.pseudo + '/' + data.mail_verif
+        'http://' + url + '/connection/' + data.pseudo + '/' + data.mail_verif
     }
     require('../server/server').send_mail(mail, function (err) {
         if (err)
@@ -202,8 +202,16 @@ function identify_user(data, cb) {
             else if (res.password == require('../tools/check').mini_hash(data.password, res.salt)) {
                 if (res.mail_verif != 'OK')
                     cb(1, 'email not verify');
-                else
-                    cb(false, res);
+                else {
+                    var query = 'UPDATE users SET loca_lng=' + data.lng + ', loca_lat=' + data.lat + ' WHERE pseudo=\'' + data.pseudo +'\'';
+                    console.log(query);
+                    mysql.query(query, function (err) {
+                        if (err)
+                            cb(true, 'error updating position in sql /' + err)
+                        else
+                            cb(false, res)
+                    })
+                }
             }
             else
                 cb(2, 'wrong password');
@@ -281,7 +289,7 @@ function update_score(id, nbr, cb) {
             tmp = tmp < 0 ? 0 : tmp;
             tmp = tmp > 100 ? 100 : tmp;
             query = 'UPDATE users SET score=\'' + tmp + '\' WHERE id=\'' + id + '\'';
-            mysql.query(query, function(err, data){
+            mysql.query(query, function (err, data) {
                 if (err)
                     cb(true, err);
                 else
@@ -304,14 +312,14 @@ function report(data, cb) {
 }
 
 function put_pos(id, data, cb) {
-    var query = 'UPDATE users SET loca_lat='+data.lat+', loca_lng='+data.lng+' WHERE id=\'' + id + '\'';
+    var query = 'UPDATE users SET loca_lat=' + data.lat + ', loca_lng=' + data.lng + ' WHERE id=\'' + id + '\'';
     mysql.query(query, function (err) {
         if (err)
             cb(true, err)
         else {
             cb(false);
-            }
-        })
+        }
+    })
 }
 
 module.exports.put_pos = put_pos;
