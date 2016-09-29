@@ -2,7 +2,7 @@
  * Created by Mathiisss on 23/08/2016.
  */
 'use strict';
-var url = '37.139.18.104'
+var url = '37.139.18.104';
 var api = 'http://'+url+':4201';
 var app = angular.module('matchaApp', ['ngRoute', 'ngCookies', 'requester', 'rzModule']);
 var mail_regex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;

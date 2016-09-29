@@ -13,8 +13,6 @@ angular.module('matchaApp').controller('profileCtrl', function ($scope, $rootSco
     var marker;
     var latLng;
 
-    console.log($rootScope.user);
-
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: 49.119309, lng: 6.175716},
@@ -63,7 +61,6 @@ angular.module('matchaApp').controller('profileCtrl', function ($scope, $rootSco
                 $scope.listOfTags = success.content;
             }
         });
-
 
         if (gglrdy) {
             initMap();

@@ -48,19 +48,20 @@ angular.module('matchaApp').controller('inscriptionCtrl', function ($scope, send
     $scope.send = function () {
         if (check1 && check2 && check3 && $scope.inscription.pseudo && $scope.inscription.mail && $scope.inscription.first_name && $scope.inscription.last_name ) {
             $scope.inscription.sending = "loading";
-            sender.post('/User/new', {
-                pseudo: $scope.inscription.pseudo,
-                last_name: $scope.inscription.last_name,
-                first_name: $scope.inscription.first_name,
-                password: $scope.inscription.password,
-                mail: $scope.inscription.mail
-            }, function () {
-                $location.path('/home/new');
-            });
+                sender.post('/User/new', {
+                    pseudo: $scope.inscription.pseudo,
+                    last_name: $scope.inscription.last_name,
+                    first_name: $scope.inscription.first_name,
+                    password: $scope.inscription.password,
+                    mail: $scope.inscription.mail
+                }, function () {
+                    $location.path('/home/new');
+                });
         }
         else {
             $scope.inscription.errors = "error-label"
         }
     }
+
 });
 

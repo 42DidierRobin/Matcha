@@ -4,7 +4,7 @@
 
 var create_socket = function ($rootScope, $sce) {
 
-    socket = io.connect('http://' + url);
+    socket = io.connect('http://' + url + ':3042');
 
     socket.on('userDisconnect', function (user) {
         for (var i in $rootScope.listMatch) {

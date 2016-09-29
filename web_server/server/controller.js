@@ -21,6 +21,7 @@ function new_user(req, cb) {
             if (err)
                 cb(true, data);
             else {
+                //TODO: chercher loca_lng
                 user.define_user(req.body, function (err, data) {
                     if (err)
                         cb(true, data);
@@ -502,31 +503,18 @@ function get_result(data, users_id, cb) {
                                 if (err)
                                     cb(true, 'error getting block relation from user / ' + d2);
                                 else {
-                                    for (var i = 0; i < d1.length; i++) {
-                                        var alreadyDel = false;
-                                        for (var j = 0; j < d2.length; j++) {
-                                            if (d1[i].id == d2[j].id) {
-                                                console.log('deleted:' + d1[i].id)
-                                                d1.splice(i, 1);
-                                                alreadyDel = true;
-                                                break;
-                                            }
-                                        }
-                                        if (!alreadyDel) {
-                                            console.log(d1[i].id);
-                                            d1[i].dist = (geolib.distance({
-                                                p1: {lat: parseFloat(data.lat), lon: parseFloat(data.lng)},
-                                                p2: {lat: parseFloat(d1[i].loca_lat), lon: parseFloat(d1[i].loca_lng)}
-                                            }).distance);
-                                            console.log(d1[i].dist);
-                                            if (d1[i].dist <= data.dist.from || d1[i].dist >= data.dist.to)
-                                                d1.splice(i, 1);
-                                        }
-                                    }
-                                    if (d1.length == 0)
+                                    var result = d1.filter(function (elem) {
+                                        elem.dist = (geolib.distance({
+                                            p1: {lat: parseFloat(data.lat), lon: parseFloat(data.lng)},
+                                            p2: {lat: parseFloat(elem.loca_lat), lon: parseFloat(elem.loca_lng)}
+                                        }).distance);
+                                        return (!d2.find(function(elem2){return elem.id === elem2.id;}) &&
+                                            (elem.dist >= data.dist.from && elem.dist <= data.dist.to))
+                                    });
+                                    if (result.length == 0)
                                         cb(42);
                                     else
-                                        cb(false, d1);
+                                        cb(false, result);
                                 }
                             }
                         )
