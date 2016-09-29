@@ -1,0 +1,37 @@
+<div class="header">
+    <h1 class="matcha">
+        <a class="matcha" ng-href="{{host}}">Matcha</a>
+    </h1>
+    <div class="AllTabs">
+        <a class="tabs" href="/browse">
+            <div class="tabs">
+                <img class="tabs" src="./assets/style/img/icon/browse.png" alt="">
+                <p class="tabs">
+                    Browse
+                </p>
+            </div>
+        </a>
+        <a class="tabs middle" href="/search">
+            <div class="tabs">
+                <img class="tabs" src="./assets/style/img/icon/search.png" alt="">
+                <p class="tabs">
+                    Search
+                </p>
+            </div>
+        </a>
+        <a class="tabs left" href="/profile">
+            <div class="tabs">
+                <img class="tabs" src="./assets/style/img/icon/profile.png" alt="">
+                <p class="tabs">
+                    Profile
+                </p>
+            </div>
+        </a>
+    </div>
+    <p class="headerLinks">
+        <a ng-href="{{host}}inscription">Sign up</a>
+        |
+        <a ng-href="{{host}}connection" ng-hide="user">Sign in</a>
+        <a ng-href="{{host}}" ng-click="deco()" ng-show="user">Sign out</a>
+    </p>
+</div>

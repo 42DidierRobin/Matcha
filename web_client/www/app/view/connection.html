@@ -1,0 +1,28 @@
+<div class="formContainer">
+    <form ng-submit="send()" class="form">
+        <div ng-class="mail_verif || 'hide'">
+            <p class="congrats">
+                Your email has been confirm ! Welcome to Matcha. You can now connect and use our entire service. Enjoy !
+            </p>
+        </div>
+        <div ng-class="already_verif || 'hide'">
+            <p class="congrats">
+                You already have checked this email adress !
+            </p>
+        </div>
+        <fieldset class="form-group">
+            <label>Pseudo</label>
+            <input type="text" class="form-control" placeholder="Enter pseudo" ng-model="login.pseudo" name/>
+        </fieldset>
+        <fieldset class="form-group">
+            <label>Password</label>
+            <input type="password" class="form-control" placeholder="Enter password" ng-model="login.password"/>
+            <a href="" ng-click="changePwd()" ng-show="login.pseudo">
+                <small class="text-muted">I forget my password.</small>
+            </a>
+        </fieldset>
+        <button type="submit" class="btn btn-primary searchButton">Login</button>
+        <span ng-class="login.errorPass || 'hide'">Wrong Pseudo/Password combination</span>
+        <span ng-class="login.errorMail || 'hide'">Please verify your email before login</span>
+    </form>
+</div>

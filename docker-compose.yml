@@ -1,0 +1,35 @@
+web_server:
+    build: web_server
+    ports:
+        - "4201:4201"
+        - "3042:3042"
+    volumes:
+        - ./web_server:/usr/src/app/web_server/
+    links:
+        - mysql:mysql
+
+mysql:
+    image: mysql:latest
+    ports:
+        - "4202:3306"
+    volumes:
+        - ./mysql/data:/var/lib/mysql
+    environment:
+        - MYSQL_ROOT_PASSWORD=matcha42
+        - MYSQL_USER=matcha_user
+        - MYSQL_PASSWORD=matcha42
+        - MYSQL_DATABASE=matcha
+
+web_client:
+    image : nginx
+    ports:
+        - "80:80"
+    volumes:
+        - ./web_client/conf.d:/etc/nginx/conf.d
+        - ./web_client/www:/usr/share/nginx/html
+
+mail_dev:
+    image : djfarrelly/maildev
+    ports:
+        - "4242:80"
+        - "4203:25"

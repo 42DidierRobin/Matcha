@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- clef API google: AIzaSyCCyDtqBaIbC1JuDHjWsCJe610disEh-es -->
+    <meta charset="UTF-8">
+    <title>Matcha</title>
+    <base href="/">
+    <script src="assets/lib/angular/angular.js"></script>
+    <script src="assets/lib/angular/angular-root.js"></script>
+    <script src="assets/lib/angular/angular-cookie.js"></script>
+    <script src="assets/lib/socket/socket.io.js"></script>
+    <script src="assets/lib/slider/rzslider.min.js"></script>
+    <script src="app/app.js"></script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCyDtqBaIbC1JuDHjWsCJe610disEh-es&callback=googleRDY">
+    </script>
+
+    <script src="app/tools/socket.js"></script>
+    <script src="app/tools/requester.js"></script>
+    <script src="app/controller/inscriptionCtrl.js"></script>
+    <script src="app/controller/connectionCtrl.js"></script>
+    <script src="app/controller/browseCtrl.js"></script>
+    <script src="app/controller/sideMenuCtrl.js"></script>
+    <script src="app/controller/profileCtrl.js"></script>
+    <script src="app/controller/aprofileCtrl.js"></script>
+    <script src="app/controller/searchCtrl.js"></script>
+    <script src="app/controller/homeCtrl.js"></script>
+
+    <link rel="stylesheet" href="assets/lib/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="assets/lib/slider/rzslider.min.css"/>
+    <link rel="stylesheet" href="assets/style/matcha.css">
+</head>
+<body ng-app="matchaApp" ng-controller="mainCtrl">
+<ng-include src="'app/view/header.html'"></ng-include>
+<div class="mainBody">
+    <ng-include src="'app/view/sideMenu.html'" ng-controller="sideMenuCtrl"></ng-include>
+    <div class="template" ng-view></div>
+</div>
+</body>
+</html>

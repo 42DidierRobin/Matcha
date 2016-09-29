@@ -1,0 +1,21 @@
+<div ng-class="noResult">
+    <img src="../../assets/style/img/sorry.png" alt="">
+    <hr>
+    Im sorry we couldnt find anyone looking from your profile
+</div>
+<div ng-repeat="user in listOfResults">
+    <a class="profileLink" ng-href="/profile/{{user.id}}">
+        <div class="oneResult">
+            <div class="imgSearch">
+                <img class="searchPic" ng-src="{{user.mainPic}}" alt="">
+            </div>
+            <p class="resultp">{{user.pseudo}}</p>
+            <hr class="result">
+            <p class="resultp">{{user.age}} years old</p>
+            <hr class="result">
+            <p class="resultp">{{user.dist}} km from you</p>
+            <hr class="result">
+            <p class="resultp">{{user.score}} / 100</p>
+        </div>
+    </a>
+</div>

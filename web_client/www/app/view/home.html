@@ -1,0 +1,26 @@
+<div>
+    <div class="homeTitle">
+        <h1>Matcha</h1>
+    </div>
+    <div class="homeImg">
+        <img src="../../assets/style/img/home.png" alt="">
+    </div>
+    <div class="homeTxt">
+        <p ng-hide="new || newMail">
+            Welcome to matcha. This meeting site is a project of 42 Realise by @Mathiisss.
+            Please understand you have to be log on to use this application.
+            Browsing and looking for people are only available for fully registered and log on user.
+            Enjoy !
+        </p>
+        <p ng-show="new">
+            Welcome to matcha ! Thank you for registering.
+            You will have to confirm your mail to fully complete your inscription.
+            Then come back and try to find your soul mate !
+            Enjoy.
+        </p>
+        <p ng-show="newMail">
+            Welcome back ! Because you just change your mail, you have been automaticly disconnected.
+            You will have to confirm your new mail to enjoy the website again. Please go for it and come back to us ASAP !
+        </p>
+    </div>
+</div>

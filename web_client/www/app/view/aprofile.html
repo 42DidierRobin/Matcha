@@ -1,0 +1,126 @@
+<div class="quickProfile">
+    <div class="picture">
+        <img ng-src="{{picture[0].src || '../../assets/style/img/no_picture.png'}}" alt="" class="profile">
+        <div class="matchText" ng-show="matched">
+            <p class="match">Matched<img src="../../assets/style/img/icon/coeur.png" alt="" class="match"></p>
+        </div>
+        <div class="matchText" ng-show="!matched && imLiked">
+            <p class="match">This person like you</p>
+        </div>
+    </div>
+    <div class="resume">
+        <div class="oneInformation">
+            <p class="title">
+                Pseudo:
+            </p>
+            <p class="data">
+                {{user.pseudo || "not connected"}}
+            </p>
+        </div>
+        <div class="oneInformation">
+            <p class="title">
+                State:
+            </p>
+            <p class="data">
+                {{user.connected || "not connected"}}
+            </p>
+        </div>
+        <div class="oneInformation">
+            <p class="title">
+                Score:
+            </p>
+            <!-- TODO: handle score-->
+            <p class="data">
+                {{user.score || "0"}} / 100
+            </p>
+        </div>
+        <div class="otherPhotos">
+            <div class="oneOtherPhoto" ng-repeat="index in [1,2,3,4]">
+                <img class="otherPhotos" ng-src="{{picture[index].src || '../../assets/style/img/no_picture_grey.png'}}"
+                     alt="">
+            </div>
+        </div>
+        <div class="interaction">
+            <button type="button" ng-click="newRelation(false)" ng-class="">
+                {{buttonText}}
+            </button>
+            <button ng-click="newRelation(true)">
+                Block
+            </button>
+            <button ng-click="report()"> Report false account</button>
+        </div>
+    </div>
+
+</div>
+<div class="fullProfile">
+    <div class="listInformation">
+        <div class="oneInformation">
+            <p class="title">
+                First name:
+            </p>
+            <p class="data">
+                {{user.first_name || "not connected"}}
+            </p>
+        </div>
+        <div class="oneInformation">
+            <p class="title">
+                Last name:
+            </p>
+            <p class="data">
+                {{user.last_name || "not connected"}}
+            </p>
+        </div>
+        <div class="oneInformation">
+            <p class="title">
+                Sexe:
+            </p>
+            <p class="data">
+                {{user.sex}}
+            </p>
+        </div>
+        <div class="oneInformation">
+            <p class="title">
+                Age:
+            </p>
+            <p class="data">
+                {{user.age}}
+            </p>
+        </div>
+        <div class="oneInformation">
+            <p class="title">
+                Preference:
+            </p>
+            <p class="data">
+                {{user.orientation}}
+            </p>
+        </div>
+        <div class="oneInformation">
+            <p class="title">
+                Localisation:
+            </p>
+            <p class="data">
+                {{user.dist || 0}} km
+            </p>
+        </div>
+    </div>
+    <div class="bioTags">
+        <div class="bio">
+            <p class="title">
+                Description:
+            </p>
+            <textarea readonly rows="4" cols="40" class="bio" ng-model="user.bio"></textarea>
+        </div>
+        <div class="tags">
+            <div class="tagsHeader">
+                <p class="tagsTitle">
+                    Tags:
+                </p>
+            </div>
+            <div class="listTags">
+                <div class="oneTag" ng-repeat="tag in listOfTags">
+                    {{tag.name}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

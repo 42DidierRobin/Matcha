@@ -1,0 +1,55 @@
+<div class="sideMenu">
+    <div class="notifContainer">
+        <div class="notifHeader">
+            <div class="nbrNotif">
+                {{listOfNotifs.length}}
+            </div>
+            <a href="" class="notificationHeaderLink" ng-click="showNotif()">
+                Notifications
+            </a>
+        </div>
+        <div class="listNotif" ng-show="notifClicked">
+            <a class="aNotifLink" ng-repeat="notif in listOfNotifs" href="" ng-click="clickOnNotif(notif)">
+                <div class="aNotif">
+                    {{notif.content}}
+                </div>
+                <hr class="notifHr" ng-hide="">
+            </a>
+        </div>
+    </div>
+    <div class="mainPic">
+        <img ng-src="{{mainPic || '../../assets/style/img/no_picture_grey.png'}}" alt="" class="sidePic">
+    </div>
+    <div class="listMatch">
+        <p class="listOfMatch">List of Match:</p>
+        <a class="tchat" ng-repeat="match in listMatch" href="" ng-click="activeTchat(match)">
+            <div class="aMatch" ng-click="match.newMsg = false;">
+                <img class="aMatch" src="../../assets/style/img/icon/connected.png" ng-show="match.connected" alt="">
+                <img class="aMatch" src="../../assets/style/img/icon/disconnected.png" ng-hide="match.connected" alt="">
+                <p class="aMatch">
+                    {{' ' + match.pseudo + ''}}
+                </p>
+                <p class="newMsg blink" ng-show="match.newMsg">
+                    <b>!!</b>
+                </p>
+                <!--p class="newMsg" ng-show="match.newMsg"><b>!</b></p-->
+            </div>
+        </a>
+    </div>
+</div>
+
+<div class="tchatBox" ng-show="tchatActive">
+    <div class="tchatHeader">
+        <p class="correspondant">
+            {{tchatPseudo}}
+        </p>
+        <a class="closeTchat" href="" ng-click="closeTchat()">X</a>
+    </div>
+    <div id="42" class="tchatContent" ng-bind-html="tchatContent">
+    </div>
+    <div class="tchatInput">
+        <input id="41" type="text" class="tchatInput" ng-model="msgInput"
+               ng-keypress="($event.which === 13)?postMsg(msgInput):0"/>
+    </div>
+</div>
+
