@@ -200,7 +200,7 @@ angular.module('matchaApp').controller('profileCtrl', function ($scope, $rootSco
                     });
                     google.maps.event.addListener(marker, "dragend", function(event) {
                         sender.put('/Pos', {lat: this.position.lat(), lng: this.position.lng()}, function(){
-                            console.log("position mise a jour");
+
                         })
                     });
                 }
