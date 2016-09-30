@@ -39,19 +39,17 @@ button:focus {
 }
 
 .template {
-    width: 100%;
-    float: left;
-    padding: 10px;
-    padding-left: 15px;
+    width: calc(100% - 205px);
+    max-width: 1300px !important;
+    float: right;
+    padding-left: 50px;
+    padding-top: 20px;
 }
 
 .mainBody div {
     display: inline-block;
 }
 
-.template {
-    max-width: 79%;
-}
 
 .hide {
     display: none !important;
@@ -99,6 +97,7 @@ button {
 .header {
     background-color: #2f343b;
     height: 80px;
+    min-width: 500px !important;
     position: relative;
 }
 
@@ -179,11 +178,21 @@ img.tabs {
 .sideMenu {
     clear: both;
     width: 205px;
-    max-width: 20%;
-    height: 100%;
-    min-height: 1000px;
+    position: absolute;
+    top:80;
+    left:0;
     background-color: #535c68;
     float: left;
+}
+
+.sideMenuBackground {
+    background-color: #535c68;
+    width: 205px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
 }
 
 .mainPic {
@@ -347,6 +356,10 @@ form.form {
 /* ------------- Profile -----------*/
 /* ---------------------------------*/
 
+.profileContainer {
+    padding: 20px;
+}
+
 img {
     max-width: 300px;
     height: auto;
@@ -365,6 +378,7 @@ img {
 .picture {
     width: 300px;
     height: 100%;
+    padding: 0 auto;
     max-height: 200px;
     text-align: center;
 }
@@ -456,6 +470,13 @@ p.data {
 .otherPhotos {
     width: 100%;
     clear: both;
+}
+
+input.otherPhotoLast {
+    position: absolute;
+    left: 25px;
+    top: 40px;
+    opacity: 0;
 }
 
 img.otherPhotoLast {
@@ -608,7 +629,7 @@ button.tag {
 }
 
 .locationText {
-    width: 100px;
+    width: 100%;
     text-align: left;
 }
 
@@ -627,6 +648,7 @@ button.tag {
 }
 
 .askLocate {
+    width: 100%;
     color: #7d8a9d;
 }
 
@@ -910,4 +932,110 @@ p.newMsg {
     to {
         visibility: hidden;
     }
+}
+
+
+/* ---------------------------------*/
+/* ------------- responsive --------*/
+/* ---------------------------------*/
+
+/* -- minimum -- */
+@media (max-width: 720px){
+    h1.matcha {
+        display: none;
+    }
+
+    .mainPic {
+        display: none !important;
+    }
+
+    .sideMenu {
+        font-size: 12px; !important;
+        width: 120px;
+    }
+
+    .sideMenuBackground {
+        width: 120px;
+    }
+
+    .template {
+        width: calc(100% - 120px);
+    }
+
+    body, html {
+        overflow-x: visible !important;
+    }
+}
+
+/* -- Medium -- */
+
+@media (max-width: 1100px){
+
+    .template {
+        padding: 20px;
+    }
+
+    .picture {
+        width: 200px;
+    }
+
+    img.profile {
+        max-height: 150px;
+        max-width: 150px;
+    }
+
+    .oneOtherPhoto {
+        width: 80px;
+        height:60px;
+    }
+
+    .dropZone {
+        width: 80px;
+        height:60px;
+    }
+
+    img.otherPhotoLast {
+
+        max-width: 80px;
+        max-height: 60px;
+    }
+
+    img.otherPhotos {
+        max-width: 80px;
+        max-height: 60px;
+    }
+
+    .resume {
+        width: 360px;
+    }
+
+    .oneInformation {
+        font-size: 12px;
+    }
+
+    p.title {
+        font-size: 12px;
+    }
+
+    p.data {
+        font-size: 12px;
+    }
+
+    .listInformation {
+        width : 500px;
+        margin-right: 400px;
+    }
+
+    input.otherPhotoLast {
+        width: 50px;
+        top: 20px;
+        left: 3px;
+    }
+
+    .fullProfile {
+        width: 100%;
+        display: block !important;
+    }
+
+
 }

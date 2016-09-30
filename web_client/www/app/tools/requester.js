@@ -83,7 +83,13 @@ requester.service('sender', function ($http, $cookies) {
             method: 'GET',
             url: 'http://ip-api.com/json/?fields=lat,lon'
         }).success(cb);
-    }
+    };
 
+    this.generate = function(cb) {
+        $http({
+            url: 'http://api.randomuser.me/?inc=name,email,login',
+            dataType: 'json'
+        }).success(function(data){cb(data)});
+    }
 
 });

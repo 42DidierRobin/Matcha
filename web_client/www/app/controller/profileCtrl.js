@@ -150,6 +150,10 @@ angular.module('matchaApp').controller('profileCtrl', function ($scope, $rootSco
         sender.post('/User/update', {id: $scope.user.id, bio: $scope.user.bio}, updateUser)
     };
 
+    $scope.tagError = function (){
+        $scope.tagType = 'error-label';
+    }
+
     $scope.addTag = function () {
         if ($scope.new_tag.length >= 42) {
             $scope.tagToLong = 'error-label';
@@ -173,6 +177,7 @@ angular.module('matchaApp').controller('profileCtrl', function ($scope, $rootSco
     $scope.resetError = function () {
         $scope.tagToLong = false;
         $scope.alreadyTag = false;
+        $scope.tagType = false;
     };
 
     $scope.deleteTag = function (tag) {
@@ -197,9 +202,15 @@ angular.module('matchaApp').controller('profileCtrl', function ($scope, $rootSco
                     latLng = new google.maps.LatLng(d.lat, d.lon);
                     initPos(latLng);
                     sender.put('/Pos', {lat: d.lat, lng: d.lon}, function(){
+                        $rootScope.loca_lat = d.lat;
+                        $rootScope.loca_lng = d.lng;
                     });
                     google.maps.event.addListener(marker, "dragend", function(event) {
-                        sender.put('/Pos', {lat: this.position.lat(), lng: this.position.lng()}, function(){
+                        var lat = this.position.lat();
+                        var lng = this.position.lng()
+                        sender.put('/Pos', {lat: lat, lng: lng}, function(){
+                            $rootScope.user.loca_lat = lat;
+                            $rootScope.user.loca_lng = lng;
 
                         })
                     });

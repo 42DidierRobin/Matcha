@@ -35,22 +35,48 @@ var daddy_map = {
     'password': {fct: minSize, data: 3},
     'tag': {fct: checkString, data: {from: 1, to: 100}},
     'content': {fct: noCheck},
-    'bio': {fct: noCheck},
+    'msg_content': {fct: maxString},
+    'bio': {fct: maxString},
     'key': {fct: noCheck},
     'tags': {fct: checkTab, data: 5},
     'lat': {fct: checkDouble, data: {from: 0, to: 1}},
     'lng': {fct: checkDouble, data: {from: 0, to: 1}}
 };
 
-function minSize(it, size){
+function maxString(it) {
+    it = it.replace(/[\0\x08\x09\x1a\n\r"'\\\%]/g, function (char) {
+        switch (char) {
+            case "\0":
+                return "\\0";
+            case "\x08":
+                return "\\b";
+            case "\x09":
+                return "\\t";
+            case "\x1a":
+                return "\\z";
+            case "\n":
+                return "\\n";
+            case "\r":
+                return "\\r";
+            case "\"":
+            case "'":
+            case "\\":
+            case "%":
+                return "\\" + char;
+        }
+    });
+    return true;
+}
+
+function minSize(it, size) {
     return (it.length > size);
 }
 
-function checkTab(tab, size){
+function checkTab(tab, size) {
     return (tab.length <= size)
 }
 
-function checkDouble(it, options){
+function checkDouble(it, options) {
     if (!parseFloat(it) && parseFloat(it) != 0)
         return false;
     if (options && it <= options.from && it >= options.to)
@@ -99,7 +125,7 @@ function daddy_check(listOfRequired, listOfPossible, sentData, cb) {
     }
     if (keepOn) {
         for (var j in sentData) {
-            if ( j == 'connectedId' || j == 'connectedKey' || j == 'connectedPseudo')
+            if (j == 'connectedId' || j == 'connectedKey' || j == 'connectedPseudo')
                 continue;
             if (listOfPossible.indexOf(j) == -1) {
                 cb(true, 'CHECK ERROR: args ' + j + ' not possible here /')

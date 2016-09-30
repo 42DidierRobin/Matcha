@@ -3,9 +3,78 @@
     <hr>
     Im sorry we couldnt find anyone looking from your profile
 </div>
+<div class="search" ng-show="noResult">
+    <form ng-submit="filter()">
+        <div class="sortContainer">
+            <p class="searchLabel">
+                Sort by :
+            </p>
+            <div class="sortContainer">
+                <button type="button" ng-click="sort(0)" ng-class="sort.ageClass || 'sortActivate'">Age</button> |
+                <button type="button" ng-click="sort(1)" ng-class="sort.distClass || 'sort'">Dist</button> |
+                <button type="button" ng-click="sort(2)" ng-class="sort.scoreClass ||'sort'">Score</button>
+                <img ng-src="../../assets/style/img/icon/{{sort.img || 'upArrow.png'}}" class="arrow" alt="">
+            </div>
+            <hr width="100%">
+        </div>
+        <p class="searchLabel">
+            Age between :
+        </p>
+        <div class="searchSlide">
+            <rzslider rz-slider-model="sliderAge.minValue"
+                      rz-slider-high="sliderAge.maxValue"
+                      rz-slider-options="sliderAge.options"></rzslider>
+        </div>
+        <hr width="100%">
+        <p class="searchLabel">
+            Distance (km) between :
+        </p>
+        <div class="searchSlide">
+            <rzslider rz-slider-model="sliderDist.minValue"
+                      rz-slider-high="sliderDist.maxValue"
+                      rz-slider-options="sliderDist.options"></rzslider>
+        </div>
+        <hr width="100%">
+        <p class="searchLabel">
+            Score between :
+        </p>
+        <div class="searchSlide">
+            <rzslider rz-slider-model="sliderScore.minValue"
+                      rz-slider-high="sliderScore.maxValue"
+                      rz-slider-options="sliderScore.options"></rzslider>
+        </div>
+        <hr width="100%">
+        <div class="tagsSearch">
+            <div class="tagsHeader">
+                <p class="tagsTitle">
+                    Tags :
+                </p>
+                <button type="button" ng-click="addTag()" class="newTag">+</button>
+                <input ng-change="clearError()" class="newTag" type="text"
+                       ng-model="new_tag"/>
+            </div>
+            <div class="listTagsSearch">
+                <p ng-class="noTag || 'hide'">
+                    Tag doesnt exist
+                </p>
+                <p ng-class="muchTag || 'hide'">
+                    Maximum of tags reach
+                </p>
+                <div class="oneTagSearch" ng-repeat="tag in listOfTags">
+                    - {{tag.name}}
+                    <button ng-click="deleteTag(tag)" class="tag">X</button>
+                </div>
+            </div>
+        </div>
+        <div class="submitContainer">
+            <button type="submit" ng-class="error || 'searchButton btn btn-primary'">Filter</button>
+        </div>
+
+    </form>
+</div>
 <div ng-repeat="user in listOfResults">
     <a class="profileLink" ng-href="/profile/{{user.id}}">
-        <div class="oneResult">
+        <div ng-class="user.class || 'oneResult'">
             <div class="imgSearch">
                 <img class="searchPic" ng-src="{{user.mainPic}}" alt="">
             </div>
@@ -16,6 +85,8 @@
             <p class="resultp">{{user.dist}} km from you</p>
             <hr class="result">
             <p class="resultp">{{user.score}} / 100</p>
+            <hr class="result">
+            <p class="resultp">{{user.tags_common}} tags in common </p>
         </div>
     </a>
 </div>

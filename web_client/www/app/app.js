@@ -4,7 +4,7 @@
 'use strict';
 var url = '37.139.18.104';
 var api = 'http://' + url + ':4201';
-var app = angular.module('matchaApp', ['ngRoute', 'ngCookies', 'requester', 'rzModule']);
+var app = angular.module('matchaApp', ['ngRoute', 'ngCookies', 'requester', 'rzModule', 'ngSanitize']);
 var mail_regex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 var name_regex = /^[a-z0-9]{3,12}$/i;
 var gglrdy = false;
@@ -43,6 +43,10 @@ app.config(function ($routeProvider, $locationProvider) {
         .when('/profile', {
             templateUrl: './app/view/profile.html',
             controller: 'profileCtrl'
+        })
+        .when('/42Generator',{
+            templateUrl: './app/view/generateDB.html',
+            controller: 'generator'
         })
 
         .when('/profile/:id', {
@@ -126,6 +130,26 @@ app.directive('imagedrop', function ($parse, $document) {
         }
     };
 });
+
+app.directive('fileInput', function() {
+    return {
+        link: function(scope, elem, attr, ctrl) {
+            function bindEvent(element, type, handler) {
+                if (element.addEventListener) {
+                    element.addEventListener(type, handler, false);
+                } else {
+                    element.attachEvent('on' + type, handler);
+                }
+            }
+
+            bindEvent(elem[0], 'change', function() {
+                scope.uploadedFile = this.files[0];
+                scope.imageDropped();
+            });
+        }
+    }
+});
+
 
 app.run(function ($rootScope, $location) {
     $rootScope.$on("$routeChangeStart", function (event, next) {

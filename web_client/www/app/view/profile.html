@@ -1,159 +1,165 @@
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCyDtqBaIbC1JuDHjWsCJe610disEh-es&callback=initMap">
 </script>
-<div class="quickProfile">
-    <div class="picture">
-        <img ng-src="{{picture[0].src || '../../assets/style/img/no_picture.png'}}" alt="" class="profile">
-    </div>
-    <div class="resume">
-        <div class="oneInformation">
-            <p class="title">
-                Pseudo:
-            </p>
-            <p class="data">
-                {{user.pseudo || "not connected"}}
-            </p>
+<div class="profileContainer">
+    <div class="quickProfile">
+        <div class="picture">
+            <img ng-src="{{picture[0].src || '../../assets/style/img/no_picture.png'}}" alt="" class="profile">
         </div>
-        <div class="oneInformation">
-            <p class="title">
-                E-mail:
-            </p>
-            <p class="data">
-                {{user.mail || "not connected"}}
-            </p>
-            <button class="changeMail" ng-click="changeMail()">
-                X
-            </button>
-        </div>
-        <div class="oneInformation">
-            <p class="title">
-                Score:
-            </p>
-            <!-- TODO: handle score-->
-            <p class="data">
-                {{user.score || "0"}} / 100
-            </p>
-        </div>
-        <div class="otherPhotos">
-            <div class="oneOtherPhoto" ng-repeat="index in [1,2,3]">
-                <button ng-click="makePhotoFirst(index)" ng-class="picture[index].src? 'makeFirst' : 'hide'"></button>
-                <img class="otherPhotos" ng-src="{{picture[index].src || '../../assets/style/img/no_picture_grey.png'}}"
-                     alt="">
-                <button ng-click="deletePhoto(index)" ng-class="picture[index].src? 'delete' : 'hide'"></button>
-            </div>
-            <div ng-class="picture[4].src? 'oneOtherPhoto' : 'hide'">
-                <button ng-click="makePhotoFirst(4)" class="makeFirst"></button>
-                <img class="otherPhotos" ng-src="{{picture[4].src}}" alt="">
-                <button ng-click="deletePhoto(4)" class="delete"></button>
-            </div>
-            <div ng-class="picture[4].src? 'hide' : 'dropZone'" on-image-drop="imageDropped()" imagedrop>
-                <img class="otherPhotoLast" ng-src="../../assets/style/img/icon/dragndrop.png" alt="">
-            </div>
-        </div>
-    </div>
-</div>
-<div class="fullProfile">
-    <div class="listInformation">
-        <div class="oneInformation">
-            <p class="title">
-                First name:
-            </p>
-            <p class="data">
-                {{user.first_name || "not connected"}}
-            </p>
-        </div>
-        <div class="oneInformation">
-            <p class="title">
-                Last name:
-            </p>
-            <p class="data">
-                {{user.last_name || "not connected"}}
-            </p>
-        </div>
-        <div class="oneInformation">
-            <p class="title">
-                Sexe:
-            </p>
-            <div class="Switch">
-                <select ng-change="changeSex()" ng-model="user.sex">
-                    <option value="M">Man</option>
-                    <option value="F">Woman</option>
-                </select>
-            </div>
-        </div>
-        <div class="oneInformation">
-            <p class="title">
-                Age:
-            </p>
-            <div class="slide">
-                <input onchange="angular.element(this).scope().updateAge()" class="slide" type="range" min="18" max="99"
-                       ng-model="user.age"/>
-                <p class="slide">{{user.age}}</p>
-            </div>
-        </div>
-        <div class="oneInformation">
-            <p class="title">
-                You prefer:
-            </p>
-            <div class="Switch">
-                <select ng-change="changeOrientation()" ng-model="user.orientation">
-                    <option value="M">Men</option>
-                    <option value="F">Women</option>
-                    <option value="B">Both</option>
-                </select>
-            </div>
-        </div>
-
-    </div>
-    <div class="bioTags">
-        <div class="bio">
-            <p class="title">
-                Description:
-            </p>
-            <textarea onchange="angular.element(this).scope().updateDescription()" rows="4" cols="40" class="bio"
-                      ng-model="user.bio"></textarea>
-        </div>
-        <div class="tags">
-            <div class="tagsHeader">
-                <p class="tagsTitle">
-                    Tags:
+        <div class="resume">
+            <div class="oneInformation">
+                <p class="title">
+                    Pseudo:
                 </p>
-                <button ng-click="addTag()" class="newTag">+</button>
-                <input ng-click="resetError()" ng-change="resetError()" ng-keypress="($event.which === 13)?addTag():0"
-                       class="newTag" type="text" placeholder="add new tag" ng-model="new_tag"/>
+                <p class="data">
+                    {{user.pseudo || "not connected"}}
+                </p>
             </div>
-            <div class="listTags">
-                <p ng-class="tagToLong || 'hide'">
-                    Tag too long
+            <div class="oneInformation">
+                <p class="title">
+                    E-mail:
                 </p>
-                <p ng-class="alreadyTag || 'hide'">
-                    Already got this tag
+                <p class="data">
+                    {{user.mail || "not connected"}}
                 </p>
-                <div class="oneTag" ng-repeat="tag in listOfTags">
-                    {{tag.name}}
-                    <button ng-click="deleteTag(tag)" class="tag">X</button>
+                <button class="changeMail" ng-click="changeMail()">
+                    X
+                </button>
+            </div>
+            <div class="oneInformation">
+                <p class="title">
+                    Score:
+                </p>
+                <!-- TODO: handle score-->
+                <p class="data">
+                    {{user.score || "0"}} / 100
+                </p>
+            </div>
+            <div class="otherPhotos">
+                <div class="oneOtherPhoto" ng-repeat="index in [1,2,3]">
+                    <button ng-click="makePhotoFirst(index)" ng-class="picture[index].src? 'makeFirst' : 'hide'"></button>
+                    <img class="otherPhotos" ng-src="{{picture[index].src || '../../assets/style/img/no_picture_grey.png'}}"
+                         alt="">
+                    <button ng-click="deletePhoto(index)" ng-class="picture[index].src? 'delete' : 'hide'"></button>
+                </div>
+                <div ng-class="picture[4].src? 'oneOtherPhoto' : 'hide'">
+                    <button ng-click="makePhotoFirst(4)" class="makeFirst"></button>
+                    <img class="otherPhotos" ng-src="{{picture[4].src}}" alt="">
+                    <button ng-click="deletePhoto(4)" class="delete"></button>
+                </div>
+                <div ng-class="picture[4].src? 'hide' : 'dropZone'" on-image-drop="imageDropped()" imagedrop>
+                    <input class="otherPhotoLast" type="file" id="fileinput" file-input/>
+                    <img class="otherPhotoLast" ng-src="../../assets/style/img/icon/dragndrop.png" alt="">
                 </div>
             </div>
         </div>
     </div>
-    <div class="localisation">
-        <div class="locationText">
-            <p class="title">
-                Position:
-            </p>
+    <div class="fullProfile">
+        <div class="listInformation">
+            <div class="oneInformation">
+                <p class="title">
+                    First name:
+                </p>
+                <p class="data">
+                    {{user.first_name || "not connected"}}
+                </p>
+            </div>
+            <div class="oneInformation">
+                <p class="title">
+                    Last name:
+                </p>
+                <p class="data">
+                    {{user.last_name || "not connected"}}
+                </p>
+            </div>
+            <div class="oneInformation">
+                <p class="title">
+                    Sexe:
+                </p>
+                <div class="Switch">
+                    <select ng-change="changeSex()" ng-model="user.sex">
+                        <option value="M">Man</option>
+                        <option value="F">Woman</option>
+                    </select>
+                </div>
+            </div>
+            <div class="oneInformation">
+                <p class="title">
+                    Age:
+                </p>
+                <div class="slide">
+                    <input onchange="angular.element(this).scope().updateAge()" class="slide" type="range" min="18" max="99"
+                           ng-model="user.age"/>
+                    <p class="slide">{{user.age}}</p>
+                </div>
+            </div>
+            <div class="oneInformation">
+                <p class="title">
+                    You prefer:
+                </p>
+                <div class="Switch">
+                    <select ng-change="changeOrientation()" ng-model="user.orientation">
+                        <option value="M">Men</option>
+                        <option value="F">Women</option>
+                        <option value="B">Both</option>
+                    </select>
+                </div>
+            </div>
+
         </div>
-        <div class="askLocate" ng-hide="locateAccept">
-            Clear
-            <button class="buttonLocation" ng-click="activeLocate()">here</button>
-            to <b>activate</b> the location
+        <div class="bioTags">
+            <div class="bio">
+                <p class="title">
+                    Description:
+                </p>
+                <textarea onchange="angular.element(this).scope().updateDescription()" rows="4" cols="40" class="bio"
+                          ng-model="user.bio"></textarea>
+            </div>
+            <div class="tags">
+                <div class="tagsHeader">
+                    <p class="tagsTitle">
+                        Tags:
+                    </p>
+                    <button ng-click="addTag()" class="newTag">+</button>
+                    <input ng-click="resetError()" onchange="angular.element(this).scope().tagError()" ng-change="resetError()" ng-keypress="($event.which === 13)?addTag():0"
+                           class="newTag" type="text" placeholder="add new tag" ng-model="new_tag" name/>
+                </div>
+                <div class="listTags">
+                    <p ng-class="tagToLong || 'hide'">
+                        Tag too long
+                    </p>
+                    <p ng-class="tagType || 'hide'">
+                        2 to 42 alphanumeric character please
+                    </p>
+                    <p ng-class="alreadyTag || 'hide'">
+                        Already got this tag
+                    </p>
+                    <div class="oneTag" ng-repeat="tag in listOfTags">
+                        {{tag.name}}
+                        <button ng-click="deleteTag(tag)" class="tag">X</button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="askLocate" ng-show="locateAccept">
-            Clear
-            <button class="buttonLocation" ng-click="disableLocate()">here</button>
-            to <b>disable</b> the location
-        </div>
-        <div class="location">
-            <div id="map" style="width:100%; height:100%">
+        <div class="localisation">
+            <div class="locationText">
+                <p class="title">
+                    Position:
+                </p>
+            </div>
+            <div class="askLocate" ng-hide="locateAccept">
+                Clear
+                <button class="buttonLocation" ng-click="activeLocate()">here</button>
+                to <b>activate</b> the location
+            </div>
+            <div class="askLocate" ng-show="locateAccept">
+                Clear
+                <button class="buttonLocation" ng-click="disableLocate()">here</button>
+                to <b>disable</b> the location
+            </div>
+            <div class="location">
+                <div id="map" style="width:100%; height:100%">
+                </div>
             </div>
         </div>
     </div>

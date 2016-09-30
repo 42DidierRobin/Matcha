@@ -19,8 +19,8 @@ function get_ip(req) {
     || req.client.remoteAddress);
 }
 
-function get_loc(ip, cb){
-    request('http://ip-api.com/json/'+ip+'?fields=lat,lon', function (error, response, body) {
+function get_loc(ip, cb) {
+    request('http://ip-api.com/json/' + ip + '?fields=lat,lon', function (error, response, body) {
         if (error && response.statusCode != 200)
             cb(true, response);
         else {
@@ -38,10 +38,10 @@ function new_user(req, cb) {
             if (err)
                 cb(true, data);
             else {
-                get_loc(get_ip(req), function(err, d){
+                get_loc(get_ip(req), function (err, d) {
                     if (err)
                         cb(true, 'error when finding localisation of ip /' + d)
-                    else{
+                    else {
                         req.body.loca_lat = d.lat;
                         req.body.loca_lng = d.lng;
                         user.define_user(req.body, function (err, data) {
@@ -187,16 +187,17 @@ function identify_user(req, cb) {
         if (err)
             cb(true, data);
         else {
-            get_loc(get_ip(req), function(err, d){
+            get_loc(get_ip(req), function (err, d) {
                 if (err)
-                    cb (true, 'error looking for ip /' + d);
-                else{
+                    cb(true, 'error looking for ip /' + d);
+                else {
                     req.body.lat = d.lat;
                     req.body.lng = d.lng;
                     user_dao.identify(req.body, cb);
                 }
             })
-        }})
+        }
+    })
 }
 
 function verify_email(req, cb) {
@@ -367,10 +368,12 @@ function del_relation(req, cb) {
 function new_message(req, cb) {
 
     var message = new Message();
-    check.daddy_check(['users_id_from', 'users_id_to', 'content'], ['users_id_from', 'users_id_to', 'content'], req.body, function (err, data) {
+    check.daddy_check(['users_id_from', 'users_id_to', 'msg_content'], ['users_id_from', 'users_id_to', 'msg_content'], req.body, function (err, data) {
         if (err)
             cb(true, data);
         else {
+            req.body.content = req.body.msg_content;
+            delete req.body.msg_content;
             message.set_message(req.body, cb);
         }
     })
@@ -525,33 +528,50 @@ function get_result(data, users_id, cb) {
                 cb(true, d);
             else {
                 user_dao.get_result(data, function (err, d1) {
-                    if (err == 42)
-                        cb(42);
-                    else if (err)
-                        cb(err, d1);
-                    else {
-                        //delete des personnes bloque ou qui ont bloque
-                        user_dao.get_ennemies(users_id, function (err, d2) {
-                                if (err)
-                                    cb(true, 'error getting block relation from user / ' + d2);
-                                else {
-                                    var result = d1.filter(function (elem) {
-                                        elem.dist = (geolib.distance({
-                                            p1: {lat: parseFloat(data.lat), lon: parseFloat(data.lng)},
-                                            p2: {lat: parseFloat(elem.loca_lat), lon: parseFloat(elem.loca_lng)}
-                                        }).distance);
-                                        return (!d2.find(function(elem2){return elem.id === elem2.id;}) &&
-                                            (elem.dist >= data.dist.from && elem.dist <= data.dist.to))
-                                    });
-                                    if (result.length == 0)
-                                        cb(42);
-                                    else
-                                        cb(false, result);
-                                }
+                        if (err == 42)
+                            cb(42);
+                        else if (err)
+                            cb(err, d1);
+                        else {
+                            var count = 0;
+                            for (var i in d1) {
+                                d1[i].tags_common = 0;
+                                user_dao.get_tags_common(users_id, d1[i], function (err, d42) {
+                                    if (err) {
+                                        cb(true, 'error getting tags in common' + d42);
+                                    } else {
+
+                                        if (++count == d1.length ){
+                                            //delete des personnes bloque ou qui ont bloque
+                                            user_dao.get_ennemies(users_id, function (err, d2) {
+                                                    console.log('salut');
+                                                    if (err)
+                                                        cb(true, 'error getting block relation from user / ' + d2);
+                                                    else {
+                                                        var result = d1.filter(function (elem) {
+                                                            elem.dist = (geolib.distance({
+                                                                p1: {lat: parseFloat(data.lat), lon: parseFloat(data.lng)},
+                                                                p2: {lat: parseFloat(elem.loca_lat), lon: parseFloat(elem.loca_lng)}
+                                                            }).distance);
+                                                            return (!d2.find(function (elem2) {
+                                                                return elem.id === elem2.id;
+                                                            }) &&
+                                                            (elem.dist >= data.dist.from && elem.dist <= data.dist.to))
+                                                        });
+                                                        if (result.length == 0)
+                                                            cb(42);
+                                                        else{
+                                                            cb(false, result);
+                                                            console.log(d1[1].t);}
+                                                    }
+                                                }
+                                            )
+                                        }
+                                    }})
                             }
-                        )
+                        }
                     }
-                });
+                );
             }
         })
 }

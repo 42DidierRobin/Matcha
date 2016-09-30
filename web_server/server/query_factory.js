@@ -79,7 +79,7 @@ function get_query_insert(table, data){
 }
 
 function get_query_update(table, data){
-    var query = 'UPDATE ' + table + ' SET ? WHERE ?';
+    var query = 'UPDATE ' + table + ' SET ? WHERE ';
     var set_list  = '';
     var tmp = '';
     for (var k in data.args) {
@@ -91,7 +91,7 @@ function get_query_update(table, data){
     }
     set_list = set_list.substring(0, set_list.length - 2);
     query = replace_fqm(query, set_list);
-    query = replace_fqm(query, 'id=' + data.id);
+    query +='id=' + data.id;
     return query;
 }
 
@@ -175,6 +175,7 @@ function the_ultimate_query_factory_function(action, table, data, option) {
         'Delete': get_query_delete,
         'Get'   : get_query_select
     };
+
     //console.log('query constructed :');console.log(option? action_map[action](table, data, option) : action_map[action](table, data));
     return option? action_map[action](table, data, option) : action_map[action](table, data);
 }

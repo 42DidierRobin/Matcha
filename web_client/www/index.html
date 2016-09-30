@@ -8,6 +8,7 @@
     <script src="assets/lib/angular/angular.min.js"></script>
     <script src="assets/lib/angular/angular-route.min.js"></script>
     <script src="assets/lib/angular/angular-cookies.min.js"></script>
+    <script src="assets/lib/angular/angular-sanitize.min.js"></script>
     <script src="assets/lib/socket/socket.io.js"></script>
     <script src="assets/lib/slider/rzslider.min.js"></script>
     <script src="app/app.js"></script>
@@ -23,18 +24,24 @@
     <script src="app/controller/sideMenuCtrl.js"></script>
     <script src="app/controller/profileCtrl.js"></script>
     <script src="app/controller/aprofileCtrl.js"></script>
+    <script src="app/controller/generator.js"></script>
     <script src="app/controller/searchCtrl.js"></script>
     <script src="app/controller/homeCtrl.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="assets/lib/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="assets/lib/slider/rzslider.min.css"/>
     <link rel="stylesheet" href="assets/style/matcha.css">
+
 </head>
 <body ng-app="matchaApp" ng-controller="mainCtrl">
 <ng-include src="'app/view/header.html'"></ng-include>
 <div class="mainBody">
     <ng-include src="'app/view/sideMenu.html'" ng-controller="sideMenuCtrl"></ng-include>
-    <div class="template" ng-view></div>
+    <div class="sideMenuBackground">
+    </div>
+    <div class="template" ng-view>
+    </div>
 </div>
 </body>
 </html>

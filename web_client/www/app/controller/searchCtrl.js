@@ -121,6 +121,9 @@ angular.module('matchaApp').controller('searchCtrl', function ($scope, sender, $
 
     $scope.addTag = function () {
 
+        console.log('yolo');
+        console.log($scope.listOfTags);
+
         if ($scope.listOfTags.length > 4) {
             $scope.muchTag = "error-label";
             $scope.error = 'hide';

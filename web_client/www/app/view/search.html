@@ -46,7 +46,7 @@
                         Tags :
                     </p>
                     <button type="button" ng-click="addTag()" class="newTag">+</button>
-                    <input ng-change="clearError()" ng-keypress="($event.which === 13)?addTag():0" class="newTag" type="text"
+                    <input ng-change="clearError()" class="newTag" type="text"
                            ng-model="new_tag"/>
                 </div>
                 <div class="listTagsSearch">
@@ -86,6 +86,8 @@
                 <p class="resultp">{{user.dist}} km from you</p>
                 <hr class="result">
                 <p class="resultp">{{user.score}} / 100</p>
+                <hr class="result">
+                <p class="resultp">{{user.tags_common}} tags in common</p>
             </div>
         </a>
     </div>

@@ -2,7 +2,7 @@
  * Created by rdidier on 9/21/16.
  */
 
-angular.module('matchaApp').controller('sideMenuCtrl', function ($rootScope, $route, sender, $sce, $location) {
+angular.module('matchaApp').controller('sideMenuCtrl', function ($rootScope, $route, sender, $sce, $sanitize) {
 
     $rootScope.listMatch = [];
     $rootScope.tchatActive = false;
@@ -21,13 +21,14 @@ angular.module('matchaApp').controller('sideMenuCtrl', function ($rootScope, $ro
             }
         });
         sender.get('/Picture', {users_id: $rootScope.user.id, main: 1}, function (data) {
+            if (data[0]){
             if (!$rootScope.mainPic && data) {
                 $rootScope.mainPic = data[0].content;
                 if ($rootScope.mainPic)
                     $rootScope.gotPicture = true;
                 else
                     $rootScope.gotPicture = false;
-            }
+            }}
         });
         sender.get('/Match', {users_id: $rootScope.user.id}, function (success) {
             if (!success.error) {
@@ -53,9 +54,9 @@ angular.module('matchaApp').controller('sideMenuCtrl', function ($rootScope, $ro
         sender.get('/Message', {users_id_from: $rootScope.user.id, users_id_to: user.id}, function (success) {
             for (var i in success.content) {
                 if (success.content[i].users_id_from == user.id) {
-                    $rootScope.tchatContent += '<div class="aMsg notFromMe">' + String(success.content[i].content) + '</div>';
+                    $rootScope.tchatContent += '<div class="aMsg notFromMe">' + $sanitize(String(success.content[i].content)) + '</div>';
                 } else {
-                    $rootScope.tchatContent += '<div class="aMsg fromMe">' + String(success.content[i].content) + '</div>';
+                    $rootScope.tchatContent += '<div class="aMsg fromMe">' + $sanitize(String(success.content[i].content)) + '</div>';
                 }
             }
             $rootScope.tchatContent = $sce.trustAsHtml($rootScope.tchatContent);
@@ -74,16 +75,19 @@ angular.module('matchaApp').controller('sideMenuCtrl', function ($rootScope, $ro
     };
 
     $rootScope.postMsg = function (msg) {
-        sender.post('/Message', {
-            content: msg,
-            users_id_from: $rootScope.user.id,
-            users_id_to: $rootScope.tchatId
-        }, function () {
-            $rootScope.tchatContent += '<div class="aMsg fromMe">' + msg + '</div>';
-            $rootScope.tchatContent = $sce.trustAsHtml($rootScope.tchatContent);
-            socket.emit('sendMsg', {from: $rootScope.user.id, to: $rootScope.tchatId, content: msg});
+        if ($sanitize(msg) != '') {
+            sender.post('/Message', {
+                msg_content: msg,
+                users_id_from: $rootScope.user.id,
+                users_id_to: $rootScope.tchatId
+            }, function () {
+                $rootScope.tchatContent += '<div class="aMsg fromMe">' + $sanitize(msg) + '</div>';
+                $rootScope.tchatContent = $sce.trustAsHtml($rootScope.tchatContent);
+                socket.emit('sendMsg', {from: $rootScope.user.id, to: $rootScope.tchatId, content: msg});
+                updateConv();
+            })
+        } else
             updateConv();
-        })
     }
 
     $rootScope.showNotif = function () {

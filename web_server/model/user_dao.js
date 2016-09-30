@@ -203,7 +203,7 @@ function identify_user(data, cb) {
                 if (res.mail_verif != 'OK')
                     cb(1, 'email not verify');
                 else {
-                    var query = 'UPDATE users SET loca_lng=' + data.lng + ', loca_lat=' + data.lat + ' WHERE pseudo=\'' + data.pseudo +'\'';
+                    var query = 'UPDATE users SET loca_lng=' + data.lng + ', loca_lat=' + data.lat + ' WHERE pseudo=\'' + data.pseudo + '\'';
                     console.log(query);
                     mysql.query(query, function (err) {
                         if (err)
@@ -324,6 +324,21 @@ function put_pos(id, data, cb) {
     })
 }
 
+function get_tags_common(id_from, elem, cb) {
+    var query = 'SELECT COUNT(*) AS nb \
+    FROM users_has_tags as t0, users_has_tags as t1 \
+    WHERE (t0.users_id = ' + id_from + ') AND (t1.users_id = ' + elem.id + ') AND (t0.tags_id = t1.tags_id)';
+    mysql.query(query, function (err, row) {
+        if (err)
+            cb(true, err)
+        else{
+            elem.tags_common = row[0]['nb'];
+            cb(false)
+            }
+    });
+}
+
+module.exports.get_tags_common = get_tags_common;
 module.exports.put_pos = put_pos;
 module.exports.update_score = update_score;
 module.exports.report = report;
