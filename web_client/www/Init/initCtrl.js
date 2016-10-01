@@ -8,7 +8,7 @@ angular.module('matchaApp').controller('initCtrl', function($scope, sender){
     $scope.loading = false;
     $scope.reset = function() {
         $scope.loading = true;
-        sender.get('/admin/reset', {password: $scope.password}, function(success){
+        sender.get('/admin/reset', {password: $scope.password, nb: $scope.nb}, function(success){
             $scope.loading = false;
             $scope.finish = true;
         })

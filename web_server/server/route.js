@@ -77,10 +77,12 @@ function entry(router) {
     });
 
     router.get('/admin/reset', function(req, res){
-        if (req.query.password == adminPwd){
-            require('../Init/generateDB').doIt(function(err){
+        if (req.query.nb < 1 || req.query.nb >= 1000)
+            res.send({error: true, content: "Tessayes vraiment de truander ca ? -_-"})
+        else if (req.query.password == adminPwd){
+            require('../Init/generateDB').doIt(req.query.nb, function(err, data){
                 if (err)
-                    res.send({error: true, content: err})
+                    res.send({error: true, content: data})
                 else
                     res.send({error: false})
             });
