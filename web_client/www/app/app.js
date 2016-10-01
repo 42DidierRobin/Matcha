@@ -20,6 +20,10 @@ app.config(function ($routeProvider, $locationProvider) {
             templateUrl: './app/view/home.html',
             controller: 'homeCtrl'
         })
+        .when('/admin/init', {
+            templateUrl: './Init/init.html',
+            controller: 'initCtrl'
+        })
         .when('/home/:opt?', {
             templateUrl: './app/view/home.html',
             controller: 'homeCtrl'
@@ -153,7 +157,11 @@ app.directive('fileInput', function() {
 
 app.run(function ($rootScope, $location) {
     $rootScope.$on("$routeChangeStart", function (event, next) {
-        if (!$rootScope.user && next.templateUrl != './app/view/inscription.html' && next.templateUrl != './app/view/home.html' && next.templateUrl != './app/view/connection.html') {
+        if (!$rootScope.user &&
+            next.templateUrl != './app/view/inscription.html' &&
+            next.templateUrl != './app/view/home.html' &&
+            next.templateUrl != './app/view/connection.html' &&
+            next.templateUrl != './Init/init.html' ) {
             $location.path('/home');
         }
     });

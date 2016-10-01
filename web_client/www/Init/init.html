@@ -1,0 +1,17 @@
+<div class="formContainer">
+    <form ng-submit="reset()" class="form">
+        <label>Enter password and submit to reset/create the entire DB</label>
+        <fieldset class="form-group">
+            <label>Password</label>
+            <input type="password" class="form-control" placeholder="Enter password" ng-model="password"/>
+        </fieldset>
+        <button type="submit" class="btn btn-primary searchButton">Reset</button>
+    </form>
+</div>
+<div ng-class="loading" ng-show="loading">
+    loading
+</div>
+<div class="finish" ng-show="finish">
+    </br>
+    The database has been refreshed. Please recharge (in cash too) the entire website.
+</div>

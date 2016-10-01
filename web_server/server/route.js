@@ -6,6 +6,7 @@
 
 var Controller = require('./controller');
 var currentUser = {};
+var adminPwd = 'mewFourty-2'
 
 //TODO:: verifier chaque variable et chaque data ( nom existant, injection sql, conforme au format (example: age 18-100)
 
@@ -72,6 +73,20 @@ function entry(router) {
             currentUser = {};
             currentUser.connected = false;
             next();
+        }
+    });
+
+    router.get('/admin/reset', function(req, res){
+        if (req.query.password == adminPwd){
+            require('../Init/generateDB').doIt(function(err){
+                if (err)
+                    res.send({error: true, content: err})
+                else
+                    res.send({error: false})
+            });
+        }
+        else {
+            res.send({error: true, content: 'Wrooooooooooong password'})
         }
     });
 
