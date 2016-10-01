@@ -7,5 +7,4 @@ RUN     npm install -g nodemon
 RUN     npm install socket.io
 RUN     npm install geo-lib --save
 RUN     npm install request
-RUN     npm install random-user
 EXPOSE 4201

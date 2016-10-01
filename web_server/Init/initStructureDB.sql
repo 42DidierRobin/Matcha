@@ -18,7 +18,7 @@ DROP SCHEMA IF EXISTS `matcha` ;
 -- -----------------------------------------------------
 -- Schema matcha
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `matcha` DEFAULT CHARACTER SET latin1 ;
+CREATE SCHEMA IF NOT EXISTS `matcha` DEFAULT CHARACTER SET utf8 ;
 USE `matcha` ;
 
 -- -----------------------------------------------------
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `matcha`.`users` (
   UNIQUE INDEX `pseudo_UNIQUE` (`pseudo` ASC))
 ENGINE = InnoDB
 AUTO_INCREMENT = 66
-DEFAULT CHARACTER SET = latin1;
+DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -81,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `matcha`.`messages` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 AUTO_INCREMENT = 64
-DEFAULT CHARACTER SET = latin1;
+DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `matcha`.`notifications` (
     REFERENCES `matcha`.`users` (`id`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 200
-DEFAULT CHARACTER SET = latin1;
+DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -129,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `matcha`.`pictures` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 AUTO_INCREMENT = 138
-DEFAULT CHARACTER SET = latin1;
+DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -159,7 +159,7 @@ CREATE TABLE IF NOT EXISTS `matcha`.`relations` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 AUTO_INCREMENT = 245
-DEFAULT CHARACTER SET = latin1;
+DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -181,7 +181,7 @@ CREATE TABLE IF NOT EXISTS `matcha`.`reporteds` (
     FOREIGN KEY (`users_id_to`)
     REFERENCES `matcha`.`users` (`id`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1;
+DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -197,7 +197,7 @@ CREATE TABLE IF NOT EXISTS `matcha`.`tags` (
   UNIQUE INDEX `name_UNIQUE` (`name` ASC))
 ENGINE = InnoDB
 AUTO_INCREMENT = 84
-DEFAULT CHARACTER SET = latin1;
+DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -222,7 +222,7 @@ CREATE TABLE IF NOT EXISTS `matcha`.`users_has_tags` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1;
+DEFAULT CHARACTER SET = utf8;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

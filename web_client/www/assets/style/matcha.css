@@ -40,8 +40,8 @@ button:focus {
 
 .template {
     width: calc(100% - 205px);
+    margin-left: 205px;
     max-width: 1300px !important;
-    float: right;
     padding-left: 50px;
     padding-top: 20px;
 }
@@ -762,6 +762,10 @@ p.slideSearch {
     font-style: normal;
     font-size: small;
     color: #7d8a9d;
+}
+
+.noResult {
+
 }
 
 .oneResult:hover {

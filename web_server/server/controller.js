@@ -187,15 +187,7 @@ function identify_user(req, cb) {
         if (err)
             cb(true, data);
         else {
-            get_loc(get_ip(req), function (err, d) {
-                if (err)
-                    cb(true, 'error looking for ip /' + d);
-                else {
-                    req.body.lat = d.lat;
-                    req.body.lng = d.lng;
-                    user_dao.identify(req.body, cb);
-                }
-            })
+            user_dao.identify(req.body, cb);
         }
     })
 }
@@ -541,7 +533,7 @@ function get_result(data, users_id, cb) {
                                         cb(true, 'error getting tags in common' + d42);
                                     } else {
 
-                                        if (++count == d1.length ){
+                                        if (++count == d1.length) {
                                             //delete des personnes bloque ou qui ont bloque
                                             user_dao.get_ennemies(users_id, function (err, d2) {
                                                     console.log('salut');
@@ -551,7 +543,10 @@ function get_result(data, users_id, cb) {
                                                         var result = d1.filter(function (elem) {
                                                             elem.dist = (geolib.distance({
                                                                 p1: {lat: parseFloat(data.lat), lon: parseFloat(data.lng)},
-                                                                p2: {lat: parseFloat(elem.loca_lat), lon: parseFloat(elem.loca_lng)}
+                                                                p2: {
+                                                                    lat: parseFloat(elem.loca_lat),
+                                                                    lon: parseFloat(elem.loca_lng)
+                                                                }
                                                             }).distance);
                                                             return (!d2.find(function (elem2) {
                                                                 return elem.id === elem2.id;
@@ -560,14 +555,16 @@ function get_result(data, users_id, cb) {
                                                         });
                                                         if (result.length == 0)
                                                             cb(42);
-                                                        else{
+                                                        else {
                                                             cb(false, result);
-                                                            console.log(d1[1].t);}
+                                                            console.log(d1[1].t);
+                                                        }
                                                     }
                                                 }
                                             )
                                         }
-                                    }})
+                                    }
+                                })
                             }
                         }
                     }

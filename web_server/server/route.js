@@ -80,7 +80,7 @@ function entry(router) {
         if (req.query.nb < 1 || req.query.nb >= 1000)
             res.send({error: true, content: "Tessayes vraiment de truander ca ? -_-"})
         else if (req.query.password == adminPwd){
-            require('../Init/generateDB').doIt(req.query.nb, function(err, data){
+            require('../Init/generateDB').doIt(parseInt(req.query.nb), function(err, data){
                 if (err)
                     res.send({error: true, content: data})
                 else
