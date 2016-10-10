@@ -61,7 +61,8 @@
                     First name:
                 </p>
                 <p class="data">
-                    {{user.first_name || "not connected"}}
+                    <textarea onchange="angular.element(this).scope().updateFirstName()" rows="1" cols="8" class="bio"
+                              ng-model="user.first_name" name></textarea>
                 </p>
             </div>
             <div class="oneInformation">
@@ -69,7 +70,8 @@
                     Last name:
                 </p>
                 <p class="data">
-                    {{user.last_name || "not connected"}}
+                    <textarea onchange="angular.element(this).scope().updateLastName()" rows="1" cols="8" class="bio"
+                              ng-model="user.last_name" name></textarea>
                 </p>
             </div>
             <div class="oneInformation">

@@ -150,6 +150,14 @@ angular.module('matchaApp').controller('profileCtrl', function ($scope, $rootSco
         sender.post('/User/update', {id: $scope.user.id, bio: $scope.user.bio}, updateUser)
     };
 
+    $scope.updateFirstName = function () {
+        sender.post('/User/update', {id: $scope.user.id, first_name: $scope.user.first_name}, updateUser)
+    };
+
+    $scope.updateLastName = function () {
+        sender.post('/User/update', {id: $scope.user.id, last_name: $scope.user.last_name}, updateUser)
+    };
+
     $scope.tagError = function (){
         $scope.tagType = 'error-label';
     };

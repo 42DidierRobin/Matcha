@@ -177,7 +177,7 @@ module.exports.doIt = function (nb, cb) {
             user.score = Math.floor(Math.random() * 100);
             user.cookie_key = require('../tools/key').random_string(42);
             user.mail_verif = 'OK';
-            user.last_connected = '' + Math.floor(Math.random() * 10) + 2006
+            user.last_connected = '' + (Math.floor(Math.random() * 10) + 2006)
                 + ':' + Math.floor(Math.random() * 12)
                 + ':' + Math.floor(Math.random() * 28)
                 + ':' + Math.floor(Math.random() * 24)

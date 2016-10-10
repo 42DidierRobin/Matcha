@@ -64,7 +64,7 @@ function new_user(req, cb) {
 
 function update_user(req, cb) {
     var user = new User();
-    check.daddy_check(['id'], ['id', 'sex', 'bio', 'orientation', 'sex', 'age'], req.body, function (err, data) {
+    check.daddy_check(['id'], ['id', 'sex', 'bio', 'orientation', 'sex', 'age', 'first_name', 'last_name'], req.body, function (err, data) {
         if (err)
             cb(true, data);
         else {
