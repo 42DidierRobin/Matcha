@@ -9,8 +9,8 @@ function connection(multiple) {
     if (multiple){
         return mysql.createConnection({
             host: url,
-            user: "matcha_user",
-            password: "matcha42",
+            user: "matcha",
+            password: "matcha",
             database: "matcha",
             port: 4202,
             multipleStatements: true
@@ -19,8 +19,8 @@ function connection(multiple) {
 
     return mysql.createConnection({
         host: url,
-        user: "matcha_user",
-        password: "matcha42",
+        user: "matcha",
+        password: "matcha",
         database: "matcha",
         port: 4202
     });

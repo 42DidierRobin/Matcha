@@ -21,7 +21,7 @@ module.exports = function (http) {
 
         socket.on('disconnect', function () {
 
-            if (currentUser) {
+            if (currentUser.id) {
                 var del = false;
                 if (currentUser) {
                     for (var i in listOfConnected) {
