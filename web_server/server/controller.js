@@ -196,7 +196,7 @@ function verify_email(req, cb) {
     var user_dao = require('../model/user_dao');
     check.daddy_check(['pseudo', 'key'], ['pseudo', 'key'], req.query, function (err, data) {
         if (err)
-            cb(true, data)
+            cb(true, data);
         else
             user_dao.verify_email(req.query, cb);
     })

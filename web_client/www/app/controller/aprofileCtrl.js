@@ -8,10 +8,12 @@ angular.module('matchaApp').controller('aprofileCtrl', function ($rootScope, $ro
     var pseudo = '';
 
     if ($routeParams.id == $rootScope.user.id){
-        $location.path('/profile');
+        window.location = '/profile';
     }
     else {
         sender.get('/User', {id: $routeParams.id, lat: $rootScope.user.loca_lat, lng: $rootScope.user.loca_lng}, function (success) {
+            if (success.error == 42)
+                $location.path('/profile');
             if (success) {
                 $scope.user = success.content;
                 pseudo = success.content.pseudo;
@@ -48,7 +50,7 @@ angular.module('matchaApp').controller('aprofileCtrl', function ($rootScope, $ro
                     if (success) {
                         $scope.listOfTags = success.content;
                     }
-                })
+                });
                 $rootScope.socket.emit('newRel', {
                     from_pseudo: $rootScope.user.pseudo,
                     users_from: $rootScope.user.id,

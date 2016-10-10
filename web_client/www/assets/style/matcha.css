@@ -4,6 +4,7 @@
 
 html,body {
     height: 100%;
+    overflow-x: hidden !important;
 }
 
 /* -- links -- */
@@ -822,17 +823,19 @@ button.changeMail {
 }
 
 button.sort {
+    padding-left: 0;
     border: none;
     box-shadow: none;
     background-color: inherit;
-    width: 25%;
+    min-width: 17%;
 }
 
 button.sortActivate {
+    padding-left: 0;
     border: none;
     box-shadow: none;
     background-color: inherit;
-    width: 25%;
+    width: 17%;
     color: #ffa67e;
 }
 
@@ -964,11 +967,9 @@ p.newMsg {
 
     .template {
         width: calc(100% - 120px);
+        margin-left: 120px;
     }
 
-    body, html {
-        overflow-x: visible !important;
-    }
 }
 
 /* -- Medium -- */

@@ -203,14 +203,7 @@ function identify_user(data, cb) {
                 if (res.mail_verif != 'OK')
                     cb(1, 'email not verify');
                 else {
-                    var query = 'UPDATE users SET loca_lng=' + data.lng + ', loca_lat=' + data.lat + ' WHERE pseudo=\'' + data.pseudo + '\'';
-                    console.log(query);
-                    mysql.query(query, function (err) {
-                        if (err)
-                            cb(true, 'error updating position in sql /' + err)
-                        else
-                            cb(false, res)
-                    })
+                    cb(false, res)
                 }
             }
             else

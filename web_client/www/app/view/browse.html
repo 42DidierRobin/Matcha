@@ -12,7 +12,8 @@
             <div class="sortContainer">
                 <button type="button" ng-click="sort(0)" ng-class="sort.ageClass || 'sortActivate'">Age</button> |
                 <button type="button" ng-click="sort(1)" ng-class="sort.distClass || 'sort'">Dist</button> |
-                <button type="button" ng-click="sort(2)" ng-class="sort.scoreClass ||'sort'">Score</button>
+                <button type="button" ng-click="sort(2)" ng-class="sort.scoreClass || 'sort'">Score</button> |
+                <button type="button" ng-click="sort(3)" ng-class="sort.tagsClass || 'sort'"> Tags</button>
                 <img ng-src="../../assets/style/img/icon/{{sort.img || 'upArrow.png'}}" class="arrow" alt="">
             </div>
             <hr width="100%">

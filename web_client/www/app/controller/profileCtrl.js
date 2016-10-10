@@ -152,13 +152,10 @@ angular.module('matchaApp').controller('profileCtrl', function ($scope, $rootSco
 
     $scope.tagError = function (){
         $scope.tagType = 'error-label';
-    }
+    };
 
     $scope.addTag = function () {
-        if ($scope.new_tag.length >= 42) {
-            $scope.tagToLong = 'error-label';
-        }
-        else {
+        if ($scope.new_tag) {
             sender.post('/Tags', {tag: $scope.new_tag}, function (success) {
                 if (success && success.content == 'dup') {
                     $scope.alreadyTag = 'error-label';
@@ -168,14 +165,12 @@ angular.module('matchaApp').controller('profileCtrl', function ($scope, $rootSco
                     var new_tag = {id: success.content, name: $scope.new_tag, users_id: user.id};
                     $scope.listOfTags.push(new_tag);
                     $scope.new_tag = '';
-
                 }
             })
         }
     };
 
     $scope.resetError = function () {
-        $scope.tagToLong = false;
         $scope.alreadyTag = false;
         $scope.tagType = false;
     };

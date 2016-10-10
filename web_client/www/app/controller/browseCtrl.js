@@ -60,7 +60,7 @@ angular.module('matchaApp').controller('browseCtrl', function ($rootScope, $scop
                 else
                     return -1;
             }
-        }
+        };
         $scope.listOfResults.sort(comp);
     };
 
@@ -102,7 +102,7 @@ angular.module('matchaApp').controller('browseCtrl', function ($rootScope, $scop
 
     $scope.sort = function (nbr){
         if (!$scope.sort.ref)
-            $scope.sort.ref = {0: 'age', 1: 'dist', 2: 'score'};
+            $scope.sort.ref = {0: 'age', 1: 'dist', 2: 'score', 3: 'tags_common'};
         //on change juste le sens
         if (!$scope.sort.active)
             $scope.sort.active = 0;
@@ -118,6 +118,7 @@ angular.module('matchaApp').controller('browseCtrl', function ($rootScope, $scop
         $scope.sort.ageClass = ($scope.sort.active == 0)? 'sortActivate': 'sort';
         $scope.sort.distClass = ($scope.sort.active == 1)? 'sortActivate': 'sort';
         $scope.sort.scoreClass = ($scope.sort.active == 2)? 'sortActivate': 'sort';
+        $scope.sort.tagsClass = ($scope.sort.active == 3)? 'sortActivate': 'sort';
         $scope.sort.img = $scope.sort.order? 'upArrow.png' : 'downArrow.png';
         sort_it();
     };

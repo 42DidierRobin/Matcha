@@ -204,7 +204,7 @@ function entry(router) {
         else if (req.query.id)
             Controller.get_user_by_id(req, function (err, data) {
                 if (err)
-                    res.send({error: true, content: data});
+                    res.send({error: 42, content: data});
                 else {
                     for (var i in listOfConnected) {
                         if (listOfConnected[i].id == data.id) {
