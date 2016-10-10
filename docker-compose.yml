@@ -15,9 +15,9 @@ mysql:
     volumes:
         - ./mysql/data:/var/lib/mysql
     environment:
-        - MYSQL_ROOT_PASSWORD=matcha42
-        - MYSQL_USER=matcha_user
-        - MYSQL_PASSWORD=matcha42
+        - MYSQL_ROOT_PASSWORD=matcha
+        - MYSQL_USER=matcha
+        - MYSQL_PASSWORD=matcha
         - MYSQL_DATABASE=matcha
 
 web_client:
